@@ -27,6 +27,8 @@ export async function getProfiles(options: GetProfilesOptions = {}): Promise<Pag
   let query = supabase
     .from('v_admin_profiles')
     .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false, nullsFirst: false })
+    .order('user_id', { ascending: true })
     .range(from, to)
 
   if (search && search.length >= 2) {
