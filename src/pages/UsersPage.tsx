@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useProfiles } from "@/hooks/queries/useProfiles";
+import { formatDateTime } from "@/lib/format";
 import { supabase } from "@/lib/supabase";
 import { useUpdateProfileStatus } from "@/hooks/mutations/useProfileMutations";
 import { useDeleteUser } from "@/hooks/mutations/useDeleteUser";
@@ -293,8 +294,8 @@ const UsersPage = () => {
                         <span className="font-ui text-[13px] text-rx-text-muted">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 font-mono-data text-xs text-rx-text-secondary">
-                      {profile.created_at ? new Date(profile.created_at).toLocaleDateString('fr-FR') : '—'}
+                    <td className="px-4 py-3 font-mono-data text-xs text-rx-text-secondary whitespace-nowrap">
+                      {formatDateTime(profile.created_at)}
                     </td>
                     <td className="px-4 py-3">
                       <span className="font-mono-data text-[13px] text-rx-gold-light">

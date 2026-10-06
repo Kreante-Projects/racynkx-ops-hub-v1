@@ -1,5 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { useProfiles } from "@/hooks/queries/useProfiles";
+import { formatDateTime } from "@/lib/format";
 import { useDashboardStats } from "@/hooks/queries/useDashboardStats";
 import { useReports } from "@/hooks/queries/useReports";
 import TableSkeleton from "@/components/ui/TableSkeleton";
@@ -20,11 +21,6 @@ const PlaceholderCard = ({ title }: { title: string }) => (
     <div className="font-ui text-xs text-rx-text-muted mt-2">Module en développement</div>
   </div>
 );
-
-const formatDate = (value: string | null | undefined) => {
-  if (!value) return '—'
-  return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
-}
 
 const getUserLabel = (profile: { first_name: string | null; last_name: string | null; user_id: string }) => {
   return [profile.first_name, profile.last_name].filter(Boolean).join(' ').trim() || profile.user_id
@@ -134,7 +130,7 @@ const Dashboard = () => {
                       </td>
                       <td className="px-3 py-3"><span className="badge-pill">{u.account_role || 'user'}</span></td>
                       <td className="px-3 py-3 font-ui text-[13px] text-rx-text-secondary capitalize">{u.country || '—'}</td>
-                      <td className="px-3 py-3 font-mono-data text-xs text-rx-text-secondary">{u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '—'}</td>
+                      <td className="px-3 py-3 font-mono-data text-xs text-rx-text-secondary whitespace-nowrap">{formatDateTime(u.created_at)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -206,7 +202,7 @@ const Dashboard = () => {
                           <div className="text-[11px] text-rx-text-muted">{report.admin_decision || 'En attente de décision'}</div>
                         </div>
                       </td>
-                      <td className="px-3 py-3 font-mono-data text-xs text-rx-text-secondary whitespace-nowrap">{formatDate(report.created_at)}</td>
+                      <td className="px-3 py-3 font-mono-data text-xs text-rx-text-secondary whitespace-nowrap">{formatDateTime(report.created_at)}</td>
                     </tr>
                   ))}
                 </tbody>
